@@ -6,10 +6,17 @@ user_string = gets.chomp
 
 print "Shift factor: "
 shift_factor = gets.chomp.to_i
+if shift_factor > 26
+  shift_factor = shift_factor - 26 # Reduce the shift factor to be within 26 if the value entered is over 26
+end
 
 user_string = user_string.split("")
 
 encoded_string = user_string.map do |char|
+  if char == "32" # ignore spaces so they will be printed properly later
+    break
+  end
+
   char = char.ord # convert all characters to their ASCII codes
   if char >= 65 && char <= 90 # uppercase ASCII
     if char + shift_factor > 90
