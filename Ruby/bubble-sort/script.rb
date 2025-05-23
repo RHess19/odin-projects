@@ -32,7 +32,6 @@ end
 
 # AFTER FIRST WORKING MODEL
 # 1. After n iterations, we do not need to check the last n items of the array anymore since they are guaranteed to be sorted
-# 2. At the end of each iteration, check if the list is sorted by changing a flag when elements are swapped, and resetting it at the beginning of an iteration. If it is, change a flag to stop and return
 
 
 #nums = [1, 2, 3, 4, 5]
