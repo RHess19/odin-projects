@@ -1,8 +1,8 @@
 print "String to search: "
-input_string = gets.chomp
+input_string = gets.chomp.downcase
 
 print "Valid words separated by spaces: "
-valid_words = gets.chomp.split(" ")
+valid_words = gets.chomp.downcase.split(" ")
 
 
 def substrings(input_string, valid_words)
