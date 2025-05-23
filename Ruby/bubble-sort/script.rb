@@ -33,12 +33,14 @@ def bubble_sort(unsorted_array)
   return unsorted_array
 end
 
-
+####### TESTS #######
 #nums = [1, 2, 3, 4, 5]
 #nums = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 #nums = [4, 1, 3, 9, 7]
 #nums = [2, 1, 3, 4, 5]
-nums = [4, 3, 78, 2, 0, 2]
+#nums = [4, 3, 78, 2, 0, 2]
+#nums = [1]
+#nums = [2, 1]
 
 result = bubble_sort(nums)
 p result
