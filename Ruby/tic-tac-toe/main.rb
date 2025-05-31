@@ -21,10 +21,10 @@ loop do
     # display the current player
     puts "Player #{board.current_player}'s turn.\n"
 
-    # pass the current move to the board.process_move()
+    # pass the current move to board.process_move()
     print "Move: "
     player_input = gets.chomp.to_i
-    if !(board.process_move(player_input))
+    if !(board.process_move(player_input)) # board.process_move() returns false if not a valid move
         next
     end
 

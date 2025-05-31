@@ -14,12 +14,13 @@ class Board
     #   move: number between 1-9, corresponding to a board location
     # Returns:
     #   True if move is valid, false otherwise. This return value is not intended to be used for anything - it is simply a value to return for the sake of returning something meaningful
-    # Take in a move, check if it is valid, and update @board if it is. If it isn't, return false and do not update the board
+    #   Take in a move, check if it is valid, and update @board if it is. If it isn't, return false and do not update the board
     def process_move(move)
         if self.is_valid_move?(move)
             board[board_of_indexes[move-1][0]][board_of_indexes[move-1][1]] = self.current_player
 
             # If no winner yet, update the player to the other symbol
+            # This prevents needing to swap the player once a win is detected for it to be correct
             if self.winner? != true
                 self.update_player
             end
@@ -36,6 +37,7 @@ class Board
     # Returns:
     #   True if the current board layout indicates a win
     #   False if a draw
+    #   Otherwise, Nil
     # Check if the current board layout has identical symbols in any legal 3-in-a-row layouts
     # Check if the board is full - if it is and there is no winner, it's a draw
     def winner?
@@ -93,8 +95,8 @@ class Board
     private
 
     # Inputs:
-    #   index_outer: [i] index of the player's move
-    #   index_inner: [j] index of the player's move
+    #   index_outer: [i] index of the player's move ([i][j])
+    #   index_inner: [j] index of the player's move ([i][j])
     # Returns:
     #   board
     # Take an index, update that index with @current_player
@@ -108,7 +110,7 @@ class Board
     #   input_number: the command line input from the user
     # Returns:
     #   True if valid, False otherwise
-    # Check if @board[@board_of_indexes[input_number-1][0], @board_of_indexes[input_number-1][1]] == '-' and input_number is indeed a number between 1-9
+    # Check if @board[@board_of_indexes[input_number-1][0][board_of_indexes[input_number-1][1]] == '-', so player selected an empty location
     def is_valid_move?(input_number)
         if (input_number >= 1) && (input_number <= 9)
             return board[board_of_indexes[input_number-1][0]][board_of_indexes[input_number-1][1]] == '-'
