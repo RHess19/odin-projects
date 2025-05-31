@@ -1,5 +1,6 @@
 # Main game loop
-winner = ""
+
+board = Board.new
 
 while == ""
 
@@ -7,8 +8,7 @@ while == ""
     # display the current player
     # display the current move options to the player
 
-    # when option is selected, reset this round if they choose > or < than the allowed options
-    # or enter any other non-legal character
+    # pass the current move to the board.process_move()
 
     # if option is valid, process the choice and check for a winner
     # flip the current player
