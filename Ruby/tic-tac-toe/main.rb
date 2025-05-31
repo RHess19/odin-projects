@@ -1,8 +1,13 @@
-# Main game loop
+require_relative 'board'
 
 board = Board.new
 
-while == ""
+while !board.winner?
+
+    # display instructions - press button corresponding to the board location
+    # 1 2 3
+    # 4 5 6
+    # 7 8 9
 
     # display the current board state
     # display the current player
