@@ -3,7 +3,7 @@ require_relative 'board'
 board = Board.new
 player_input = ""
 
-while !board.winner?
+loop do
 
     # display instructions - press button corresponding to the board location
     # 1 2 3
@@ -25,11 +25,18 @@ while !board.winner?
     print "Move: "
     player_input = gets.chomp.to_i
     if !(board.process_move(player_input))
-        puts "Please enter a valid move."
+        next
     end
 
     puts "----------------------------\n"
 
-    # allow the loop to begin again
-
+    if board.winner?
+        board.display_board
+        puts "\nPlayer #{board.current_player} wins!"
+        break
+    elsif board.winner? == false # draw
+        board.display_board
+        puts "\nIt's a draw!"
+        break
+    end
 end

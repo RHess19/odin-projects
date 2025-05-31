@@ -5,7 +5,8 @@ class Board
     def initialize
         @current_player = 'X'
         @board = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
-        @board_of_indexes = [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]]
+        @board_of_indexes = [[0,0],[0,1],[0,2],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2]] # Index representation of what each board location is
+        @winning_indexes = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [6,4,2]] # List of indexes that must be equal for a win
     end
 
 
@@ -17,9 +18,11 @@ class Board
     def process_move(move)
         if self.is_valid_move?(move)
             board[board_of_indexes[move-1][0]][board_of_indexes[move-1][1]] = self.current_player
-            self.update_player
 
-            self.winner?
+            # If no winner yet, update the player to the other symbol
+            if self.winner? != true
+                self.update_player
+            end
 
             return true
         else
@@ -31,11 +34,21 @@ class Board
     # Inputs:
     #   None
     # Returns:
-    #   True if the current board layout indicates a win, False otherwise
+    #   True if the current board layout indicates a win
+    #   False if a draw
     # Check if the current board layout has identical symbols in any legal 3-in-a-row layouts
     # Check if the board is full - if it is and there is no winner, it's a draw
     def winner?
-        
+        @winning_indexes.each do |winner|
+            if self.board.flatten[winner[0]] == self.board.flatten[winner[1]] && self.board.flatten[winner[1]] == self.board.flatten[winner[2]] && self.board.flatten[winner[0]] != '-'
+                return true
+            end
+        end
+
+        # If no winner, check if the board is full. If it is, it's a draw
+        if self.board.flatten.count('-') == 0
+            return false
+        end
     end
 
 
