@@ -1,4 +1,4 @@
-require_relative 'board'
+require_relative 'lib/board'
 
 board = Board.new
 player_input = ""
