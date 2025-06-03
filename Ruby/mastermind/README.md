@@ -1,0 +1,1 @@
+Create the game of Mastermind (https://www.wikihow.com/Play-Mastermind) with Ruby. Allows the player to play as the guesser or the creator of the secret code. Game is played against the computer.
