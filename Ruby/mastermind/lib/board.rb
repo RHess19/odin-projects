@@ -5,9 +5,9 @@ class Board
 
   def initialize(player)
     @player = player
-    @answer = ['r', 'g', 'b', 'p']
+    @valid_colors = Colors.make_colored(['p', 'o', 'g', 'r', 'b', 'y'])
+    @answer = self.generate_answer # will be colored since #generate_answer used the colored version of @valid_colors
     @hints = [] # holds arrays of all previous hints generated
-    @valid_colors = ['p', 'o', 'g', 'r', 'b', 'y']
     @winner = false
   end
 
@@ -80,8 +80,8 @@ class Board
   # Takes in a guess, returns hints based on @answer
   def generate_hints(player_guess)
     hints = []
-    # For each item in the player's guess, if player_guess[i] is equal to @answer[i], push a white O in hints
-    # If player_guess[i] is NOT equal to @answer[i] BUT player_guess[i] exists elsewhere in @answer[i], push a red O in hints
+    # For each item in the player's guess, if player_guess[i] is equal to @answer[i], push a red O in hints
+    # If player_guess[i] is NOT equal to @answer[i] BUT player_guess[i] exists elsewhere in @answer[i], push a white O in hints
     # return hints
   end
 
@@ -99,7 +99,11 @@ class Board
   # RETURNS:
   #   Array with length 4 containing a random hidden answer
   def generate_answer
-    
-  end
+    answer = []
+    4.times do
+      answer.push(@valid_colors[rand(4)])
+    end
 
+    return answer
+  end
 end

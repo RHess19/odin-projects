@@ -19,7 +19,7 @@ while round < 13 && board.winner != true
   if round == 1
     puts "##############\n# MASTERMIND #\n##############\n"
 
-    puts "Each round, guess the secret color order by entering four characters from the valid colors: #{Colors.make_colored(board.valid_colors)}"
+    puts "Each round, guess the secret color order by entering four characters from the valid colors: #{'p'.colorize(:magenta)} #{'o'.colorize(:light_red)} #{'g'.colorize(:green)} #{'r'.colorize(:red)} #{'b'.colorize(:blue)} #{'y'.colorize(:yellow)}"
     puts "After each guess, you will receive up to 4 hints. A white hint indicates one of your guesses is correct, but in the wrong location. A red hint indicates one of your guesses is correct AND in the right location."
     puts "Enter guesses in the format 'cccc' where each 'c' is one of the valid colors. Hints are displayed in a random order."
     puts "You have 12 rounds to guess the correct color combination."
