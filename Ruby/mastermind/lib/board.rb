@@ -94,7 +94,7 @@ class Board
     
   end
 
-    # INPUTS:
+  # INPUTS:
   #   None
   # RETURNS:
   #   Array with length 4 containing a random hidden answer
