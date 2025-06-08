@@ -2,7 +2,7 @@ class Board
   attr_accessor :answer, :hints, :valid_colors, :winner
 
   def initialize
-    @answer = generate_answer
+    @answer = ['r', 'g', 'b', 'p']
     @hints = [] # holds arrays of all previous hints generated
     @valid_colors = ['p', 'o', 'g', 'r', 'b', 'y']
     @winner = false
@@ -15,6 +15,7 @@ class Board
   def process_guess(player_guess)
     # #validate_guess on player.guesses.pop[0]. if guess is NOT valid, pop 1 from player.guesses
     validate_guess(player_guess)
+    winner?(player_guess)
     # If NOT #winner?
     # #generate_hints, #push onto @hints
     # #randomize_hints
@@ -58,7 +59,7 @@ class Board
   #   None
   # Takes in an array of guessed colors, sets @winner to true or false based on whether or not player_guess == @answer
   def winner?(player_guess)
-    
+    return player_guess == @answer
   end
 
   # INPUTS:

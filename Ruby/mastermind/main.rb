@@ -31,7 +31,7 @@ while round < 13 && board.winner != true
   print("Guess: ")
   player_input = gets.chomp.split("")
   player.submit_guess(player_input)
-  p board.process_guess(player_input)
+  board.process_guess(player_input)
          
 
   round += 1
