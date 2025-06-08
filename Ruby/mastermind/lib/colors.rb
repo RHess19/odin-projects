@@ -1,3 +1,5 @@
+require_relative 'board' # to access board@valid_colors
+
 # Handles returning guesses colored properly
 module Colors
   def Colors.make_colored(input)

@@ -14,6 +14,7 @@ class Board
   #   None
   def process_guess(player_guess)
     # #validate_guess on player.guesses.pop[0]. if guess is NOT valid, pop 1 from player.guesses
+    validate_guess(player_guess)
     # If NOT #winner?
     # #generate_hints, #push onto @hints
     # #randomize_hints
@@ -25,7 +26,7 @@ class Board
   #   None
   # Writes the all past guesses and hints to the screen
   def display_board
-    
+    # use Colors module
   end
 
 
@@ -38,7 +39,17 @@ class Board
   #   true if guess is valid, false otherwise
   # Check that the player's guess only includes @valid_colors and only contains 4 characters
   def validate_guess(player_guess)
-    
+    player_guess.each do |guess|
+      if !@valid_colors.include?(guess)
+        return false
+      end
+    end
+
+    if player_guess.length != 4
+      return false
+    end
+
+    return true
   end
 
   # INPUTS:

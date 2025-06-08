@@ -30,7 +30,8 @@ while round < 13 && board.winner != true
   # Get player guess
   print("Guess: ")
   player_input = gets.chomp.split("")
-  board.process_guess(player_input)
+  player.submit_guess(player_input)
+  p board.process_guess(player_input)
          
 
   round += 1
