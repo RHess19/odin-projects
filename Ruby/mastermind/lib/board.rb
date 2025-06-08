@@ -5,8 +5,8 @@ class Board
 
   def initialize(player)
     @player = player
-    @valid_colors = Colors.make_colored(['p', 'o', 'g', 'r', 'b', 'y'])
-    @answer = self.generate_answer # will be colored since #generate_answer used the colored version of @valid_colors
+    @valid_colors = ['p', 'o', 'g', 'r', 'b', 'y']
+    @answer = ['r', 'r', 'r', 'r']
     @hints = [] # holds arrays of all previous hints generated
     @winner = false
   end
@@ -33,7 +33,7 @@ class Board
   #   None
   # Writes the all past guesses and hints to the screen
   def display_board
-    # use Colors module
+    # use colorize
   end
 
 

@@ -15,8 +15,6 @@ class Player
       item.downcase
     end
 
-    player_guess = Colors.make_colored(player_guess)
-
     @guesses.push(player_guess)
   end
 end

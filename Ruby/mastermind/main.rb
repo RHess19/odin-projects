@@ -26,7 +26,7 @@ while round < 13 && board.winner != true
   end
 
   puts "GAME BOARD"
-  # board.display_board
+  board.display_board
 
   # Get player guess
   puts "Round #{round}"
@@ -39,12 +39,11 @@ while round < 13 && board.winner != true
   round += 1
 end
 
-# winner
-# OR check if rounds expired but no winner
+# END GAME
 
+# Rounds expired
 if board.winner != true
-  # Rounds expired
-  puts "Rounds expired. You lose!"
+  puts "Out of rounds. You lose!"
 end
 
 # Winner
