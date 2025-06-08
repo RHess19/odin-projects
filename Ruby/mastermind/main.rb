@@ -7,7 +7,7 @@ player = Player.new
 computer = Player.new
 
 # create a board object
-board = Board.new
+board = Board.new(player)
 
 player_input = ""
 
@@ -22,12 +22,14 @@ while round < 13 && board.winner != true
     puts "Each round, guess the secret color order by entering four characters from the valid colors: #{Colors.make_colored(board.valid_colors)}"
     puts "After each guess, you will receive up to 4 hints. A white hint indicates one of your guesses is correct, but in the wrong location. A red hint indicates one of your guesses is correct AND in the right location."
     puts "Enter guesses in the format 'cccc' where each 'c' is one of the valid colors. Hints are displayed in a random order."
+    puts "You have 12 rounds to guess the correct color combination."
   end
 
   puts "GAME BOARD"
   # board.display_board
 
   # Get player guess
+  puts "Round #{round}"
   print("Guess: ")
   player_input = gets.chomp.split("")
   player.submit_guess(player_input)
@@ -39,3 +41,11 @@ end
 
 # winner
 # OR check if rounds expired but no winner
+
+if board.winner != true
+  # Rounds expired
+  puts "Rounds expired. You lose!"
+end
+
+# Winner
+puts "You win! The correct color combination is #{p board.answer}."

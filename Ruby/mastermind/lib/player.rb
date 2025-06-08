@@ -1,15 +1,3 @@
-# Player class
-
-# Members:
-#   @guesses - nested array of all previous guesses. attr_reader
-
-
-# Methods:
-#   #submit_guess - take in an array. add to @guesses
-
-
-
-
 class Player
   attr_reader :guesses
 

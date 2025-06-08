@@ -1,7 +1,10 @@
 class Board
   attr_accessor :answer, :hints, :valid_colors, :winner
 
-  def initialize
+  require_relative 'colors'
+
+  def initialize(player)
+    @player = player
     @answer = ['r', 'g', 'b', 'p']
     @hints = [] # holds arrays of all previous hints generated
     @valid_colors = ['p', 'o', 'g', 'r', 'b', 'y']
@@ -14,11 +17,14 @@ class Board
   #   None
   def process_guess(player_guess)
     # #validate_guess on player.guesses.pop[0]. if guess is NOT valid, pop 1 from player.guesses
-    validate_guess(player_guess)
-    winner?(player_guess)
-    # If NOT #winner?
-    # #generate_hints, #push onto @hints
-    # #randomize_hints
+    if !validate_guess(player_guess)
+      @player.guesses.pop
+    else
+      if !winner?(player_guess)
+        @hints.push(generate_hints(player_guess))
+        self.randomize_hints
+      end
+    end
   end
 
   # INPUTS:
@@ -59,7 +65,12 @@ class Board
   #   None
   # Takes in an array of guessed colors, sets @winner to true or false based on whether or not player_guess == @answer
   def winner?(player_guess)
-    return player_guess == @answer
+    if player_guess == @answer
+      @winner = true
+      return true
+    end
+
+    return false
   end
 
   # INPUTS:
@@ -68,7 +79,10 @@ class Board
   #   Array with length <= 4 containing hints based on @answer
   # Takes in a guess, returns hints based on @answer
   def generate_hints(player_guess)
-    
+    hints = []
+    # For each item in the player's guess, if player_guess[i] is equal to @answer[i], push a white O in hints
+    # If player_guess[i] is NOT equal to @answer[i] BUT player_guess[i] exists elsewhere in @answer[i], push a red O in hints
+    # return hints
   end
 
   # INPUTS
