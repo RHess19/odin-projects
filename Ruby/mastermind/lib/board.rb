@@ -1,5 +1,5 @@
 class Board
-  attr_accessor :answer, :hints, :valid_colors, :winner, :round
+  attr_accessor :answer, :hints, :valid_colors, :winner, :round, :player
 
   require_relative 'colors'
 
@@ -20,14 +20,18 @@ class Board
   # RETURNS:
   #   None
   def process_guess(player_guess)
+    player_guess = player_guess.map do |item|
+      item.downcase
+    end
+
     @played = true
 
     if !validate_guess(player_guess) # player's guess either isn't exactly 4 characters long or contains invalid characters
-      @player.guesses.pop
       puts "Please enter a valid guess that is 4 characters long and includes only valid characters: #{'p'.colorize(:magenta)} #{'o'.colorize(:light_red)} #{'g'.colorize(:green)} #{'r'.colorize(:red)} #{'b'.colorize(:blue)} #{'y'.colorize(:yellow)}\n\n"
     else
       if !winner?(player_guess)
         @hints.push(generate_hints(player_guess))
+        @player.submit_guess(player_guess)
         self.randomize_hints
         @round += 1
       end
@@ -51,7 +55,7 @@ class Board
         output = "  "
 
         # Add each letter of the guess to the output string
-        @player.guesses[index].each do |letter|
+        self.player.guesses[index].each do |letter|
           output += Colors.make_colored([letter])[0]
           output += " "
         end
@@ -60,11 +64,11 @@ class Board
 
         # Add each hint letter to the output
         # Conver from words ("red", "white") to hints ("O" (red), "O" (white))
-        @hints[index].each do |hint|
+        self.hints[index].each do |hint|
           if hint == "red"
             output += 'O'.colorize(:red)
             output += " "
-          else
+          elsif hint == "white"
             output += 'O'.colorize(:white)
             output += " "
           end
@@ -142,7 +146,9 @@ class Board
   #   None
   # Randomize the order of all items in @hints
   def randomize_hints
-    @hints = @hints.shuffle
+    self.hints.each do |hint|
+      hint.shuffle!
+    end
   end
 
   # INPUTS:
