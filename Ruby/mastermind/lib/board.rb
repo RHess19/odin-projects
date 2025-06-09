@@ -21,8 +21,8 @@ class Board
   #   None
   def process_guess(player_guess)
     @played = true
-    # #validate_guess on player.guesses.pop[0]. if guess is NOT valid, pop 1 from player.guesses
-    if !validate_guess(player_guess)
+
+    if !validate_guess(player_guess) # player's guess either isn't exactly 4 characters long or contains invalid characters
       @player.guesses.pop
       puts "Please enter a valid guess that is 4 characters long and includes only valid characters: #{'p'.colorize(:magenta)} #{'o'.colorize(:light_red)} #{'g'.colorize(:green)} #{'r'.colorize(:red)} #{'b'.colorize(:blue)} #{'y'.colorize(:yellow)}\n\n"
     else
@@ -40,7 +40,43 @@ class Board
   #   None
   # Writes the all past guesses and hints to the screen
   def display_board
-    # use colorize
+    if @round != 1 # so that this code doesn't have to run when nothing has happened yet
+      puts "############# GAME BOARD #############\n"
+
+      puts "## GUESS ## | ## HINT ##\n________________________"
+
+      # For a number of times equal to the number of rounds played, add a colored version of the player's guesses and hints to an output string formatted to look like a game board
+      index = 0
+      (@round-1).times do
+        output = "  "
+
+        # Add each letter of the guess to the output string
+        @player.guesses[index].each do |letter|
+          output += Colors.make_colored([letter])[0]
+          output += " "
+        end
+
+        output += "  |  "
+
+        # Add each hint letter to the output
+        # Conver from words ("red", "white") to hints ("O" (red), "O" (white))
+        @hints[index].each do |hint|
+          if hint == "red"
+            output += 'O'.colorize(:red)
+            output += " "
+          else
+            output += 'O'.colorize(:white)
+            output += " "
+          end
+        end
+
+        puts output
+
+        index += 1
+      end
+
+      puts "\n\n"
+    end
   end
 
 
@@ -91,14 +127,13 @@ class Board
     # return hints
     player_guess.each.with_index do |item, index|
       if player_guess[index] == @answer[index]
-        hints.push('O'.colorize(:red))
+        hints.push("red")
       elsif player_guess[index] != @answer[index] && @answer.include?(player_guess[index])
-        hints.push('O'.colorize(:white))
+        hints.push("white")
       end
     end
 
-      hints.each { |item| puts item }
-      return hints
+    return hints
   end
 
   # INPUTS
@@ -107,7 +142,7 @@ class Board
   #   None
   # Randomize the order of all items in @hints
   def randomize_hints
-    
+    @hints = @hints.shuffle
   end
 
   # INPUTS:
@@ -129,7 +164,7 @@ class Board
   #   None
   # Displays the game instructions
   def display_instructions
-    puts "##############\n# MASTERMIND #\n##############\n\n\n"
+    puts "###########################\n# MASTERMIND INSTRUCTIONS #\n###########################\n\n\n"
 
     puts "In Mastermind, the objective is to guess your opponent's secret color combination. Their secret code will be 4 colors long (order matters!) and may contains the following colors:"
     puts "#{'Purple'.colorize(:magenta)}, #{'Orange'.colorize(:light_red)}, #{'Green'.colorize(:green)}, #{'Red'.colorize(:red)}, #{'Blue'.colorize(:blue)}, #{'Yellow'.colorize(:yellow)}\n\n"

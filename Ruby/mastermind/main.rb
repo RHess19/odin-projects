@@ -13,7 +13,6 @@ player_input = ""
 
 # main game loop for 12 rounds
 while board.round < 13 && board.winner != true
-  puts "GAME BOARD"
   board.display_board
 
   # Get player guess
@@ -29,7 +28,14 @@ end
 # Rounds expired
 if board.winner != true
   puts "Out of rounds. You lose!"
+else
+  # Winner
+  print "You win! The correct color combination is "
+
+  board.answer.each do |letter|
+    print Colors.make_colored([letter])[0]
+  end
+
+  print "\n\n"
 end
 
-# Winner
-puts "You win! The correct color combination is #{p board.answer}."
