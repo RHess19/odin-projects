@@ -26,7 +26,12 @@ end
 board.display_board
 # Rounds expired
 if board.winner != true
-  puts "Out of rounds. You lose!"
+  puts "Out of rounds. You lose! The correct answer is "
+  board.answer.each do |letter|
+    print Colors.make_colored([letter])[0]
+  end
+
+  print "\n\n"
 else
   # Winner
   print "You win! The correct color combination is "

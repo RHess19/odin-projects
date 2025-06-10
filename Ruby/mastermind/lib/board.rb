@@ -29,12 +29,10 @@ class Board
     if !validate_guess(player_guess) # player's guess either isn't exactly 4 characters long or contains invalid characters
       puts "Please enter a valid guess that is 4 characters long and includes only valid characters: #{'p'.colorize(:magenta)} #{'o'.colorize(:light_red)} #{'g'.colorize(:green)} #{'r'.colorize(:red)} #{'b'.colorize(:blue)} #{'y'.colorize(:yellow)}\n\n"
     else
-      if !winner?(player_guess)
-        @hints.push(generate_hints(player_guess))
-        @player.submit_guess(player_guess)
-        self.randomize_hints
-        @round += 1
-      end
+      winner?(player_guess)
+      @hints.push(generate_hints(player_guess))
+      @player.submit_guess(player_guess)
+      @round += 1
     end
   end
 
@@ -125,30 +123,20 @@ class Board
   #   Array with length <= 4 containing hints based on @answer
   # Takes in a guess, returns hints based on @answer
   def generate_hints(player_guess)
-    hints = []
+    hint = []
     # For each item in the player's guess, if player_guess[i] is equal to @answer[i], push a red O in hints
     # If player_guess[i] is NOT equal to @answer[i] BUT player_guess[i] exists elsewhere in @answer[i], push a white O in hints
     # return hints
     player_guess.each.with_index do |item, index|
       if player_guess[index] == @answer[index]
-        hints.push("red")
+        hint.push("red")
       elsif player_guess[index] != @answer[index] && @answer.include?(player_guess[index])
-        hints.push("white")
+        hint.push("white")
       end
     end
 
-    return hints
-  end
-
-  # INPUTS
-  #   None
-  # RETURNS:
-  #   None
-  # Randomize the order of all items in @hints
-  def randomize_hints
-    self.hints.each do |hint|
-      hint.shuffle!
-    end
+    #hint.shuffle!
+    return hint
   end
 
   # INPUTS:
