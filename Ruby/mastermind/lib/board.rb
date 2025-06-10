@@ -7,7 +7,7 @@ class Board
     @round = 1
     @player = player
     @valid_colors = ['p', 'o', 'g', 'r', 'b', 'y'] # not pre-colored using colorize
-    @answer = ['r', 'g', 'r', 'r'] # not pre-colored using colorize
+    @answer = self.generate_answer # not pre-colored using colorize
     @hints = [] # holds arrays of all previous hints generated. pre-colored using colorize
     @winner = false
     @played = false # used only to prevent the game instructions from displaying again in the case the player enters an invalid guess on the first round
