@@ -124,6 +124,12 @@ class Board
   # Takes in a guess, returns hints based on @answer
   def generate_hints(player_guess)
     hint = []
+
+    # If this guess has been done before, display the hints in the same order, even though hint order doesn't necessarily correspond to guess locations
+    if self.player.guesses.include?(player_guess)
+      return self.hints[self.player.guesses.index(player_guess)]
+    end
+
     # For each item in the player's guess, if player_guess[i] is equal to @answer[i], push a red O in hints
     # If player_guess[i] is NOT equal to @answer[i] BUT player_guess[i] exists elsewhere in @answer[i], push a white O in hints
     # return hints
@@ -135,8 +141,7 @@ class Board
       end
     end
 
-    #hint.shuffle!
-    return hint
+    return hint.shuffle
   end
 
   # INPUTS:
