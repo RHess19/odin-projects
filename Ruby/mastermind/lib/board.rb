@@ -1,5 +1,5 @@
 class Board
-  attr_accessor :answer, :hints, :valid_colors, :winner, :round
+  attr_accessor :answer, :hints, :valid_colors, :winner, :round, :player
 
   require_relative 'colors'
 
@@ -7,8 +7,13 @@ class Board
     @round = 1
     @player = player
     @valid_colors = ['p', 'o', 'g', 'r', 'b', 'y'] # not pre-colored using colorize
+<<<<<<< HEAD
     @answer = ['r', 'g', 'r', 'r'] # not pre-colored using colorize
     @hints = [] # holds arrays of all previous hints generated. sub-arrays contain either "red" or "white" which is later converted to red or white 'O's in #display_board
+=======
+    @answer = self.generate_answer # not pre-colored using colorize
+    @hints = [] # holds arrays of all previous hints generated. pre-colored using colorize
+>>>>>>> 3524a7566224cdba43e27c7ede8acd0c6102c648
     @winner = false
     @played = false # used only to prevent the game instructions from displaying again in the case the player enters an invalid guess on the first round
 
@@ -20,17 +25,19 @@ class Board
   # RETURNS:
   #   None
   def process_guess(player_guess)
+    player_guess = player_guess.map do |item|
+      item.downcase
+    end
+
     @played = true
 
     if !validate_guess(player_guess) # player's guess either isn't exactly 4 characters long or contains invalid characters
-      @player.guesses.pop
       puts "Please enter a valid guess that is 4 characters long and includes only valid characters: #{'p'.colorize(:magenta)} #{'o'.colorize(:light_red)} #{'g'.colorize(:green)} #{'r'.colorize(:red)} #{'b'.colorize(:blue)} #{'y'.colorize(:yellow)}\n\n"
     else
-      if !winner?(player_guess)
-        @hints.push(generate_hints(player_guess))
-        self.randomize_hints
-        @round += 1
-      end
+      winner?(player_guess)
+      @hints.push(generate_hints(player_guess))
+      @player.submit_guess(player_guess)
+      @round += 1
     end
   end
 
@@ -51,7 +58,7 @@ class Board
         output = "  "
 
         # Add each letter of the guess to the output string
-        @player.guesses[index].each do |letter|
+        self.player.guesses[index].each do |letter|
           output += Colors.make_colored([letter])[0]
           output += " "
         end
@@ -60,11 +67,11 @@ class Board
 
         # Add each hint letter to the output
         # Conver from words ("red", "white") to hints ("O" (red), "O" (white))
-        @hints[index].each do |hint|
+        self.hints[index].each do |hint|
           if hint == "red"
             output += 'O'.colorize(:red)
             output += " "
-          else
+          elsif hint == "white"
             output += 'O'.colorize(:white)
             output += " "
           end
@@ -121,28 +128,25 @@ class Board
   #   Array with length <= 4 containing hints based on @answer
   # Takes in a guess, returns hints based on @answer
   def generate_hints(player_guess)
-    hints = []
+    hint = []
+
+    # If this guess has been done before, display the hints in the same order, even though hint order doesn't necessarily correspond to guess locations
+    if self.player.guesses.include?(player_guess)
+      return self.hints[self.player.guesses.index(player_guess)]
+    end
+
     # For each item in the player's guess, if player_guess[i] is equal to @answer[i], push a red O in hints
     # If player_guess[i] is NOT equal to @answer[i] BUT player_guess[i] exists elsewhere in @answer[i], push a white O in hints
     # return hints
     player_guess.each.with_index do |item, index|
       if player_guess[index] == @answer[index]
-        hints.push("red")
+        hint.push("red")
       elsif player_guess[index] != @answer[index] && @answer.include?(player_guess[index])
-        hints.push("white")
+        hint.push("white")
       end
     end
 
-    return hints
-  end
-
-  # INPUTS
-  #   None
-  # RETURNS:
-  #   None
-  # Randomize the order of all items in @hints
-  def randomize_hints
-    @hints = @hints.shuffle
+    return hint.shuffle
   end
 
   # INPUTS:
