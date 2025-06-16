@@ -8,7 +8,7 @@ class Board
     @player = player
     @valid_colors = ['p', 'o', 'g', 'r', 'b', 'y'] # not pre-colored using colorize
     @answer = ['r', 'g', 'r', 'r'] # not pre-colored using colorize
-    @hints = [] # holds arrays of all previous hints generated. pre-colored using colorize
+    @hints = [] # holds arrays of all previous hints generated. sub-arrays contain either "red" or "white" which is later converted to red or white 'O's in #display_board
     @winner = false
     @played = false # used only to prevent the game instructions from displaying again in the case the player enters an invalid guess on the first round
 
