@@ -3,7 +3,7 @@ require_relative 'lib/player'
 require_relative 'lib/colors'
 
 def select_mode
-  print("Enter C to play against the computer. Enter P to choose the secret colors and have the computer try to guess the answer: ")
+  print("Enter C to play against the computer.\nEnter P to choose the secret colors and have the computer try to guess the answer\nChoice: ")
   mode = gets.chomp!
 
   if mode != 'C' && mode != 'P'
@@ -13,8 +13,7 @@ def select_mode
   ############# PLAYER V COMPUTER ###########
   if mode == 'C'
     player = Player.new
-    board = Board.new(player)
-    board.mode = 'C'
+    board = Board.new(player, mode)
     player_input = ""
 
     # main game loop for 12 rounds
@@ -53,10 +52,8 @@ def select_mode
 
   ########## COMPUTER V PLAYER #############
   elsif mode == 'P'
-
     computer = Player.new
-    board = Board.new(computer)
-    board.mode = 'P'
+    board = Board.new(computer, mode)
     computer_input = ""
 
     # Get a secret color from the player
