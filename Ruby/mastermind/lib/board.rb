@@ -197,7 +197,7 @@ class Board
   #   None
   # Displays the game instructions
   def display_instructions
-    if self.mode == 'C'
+    if @mode == 'C'
       puts "###########################\n# MASTERMIND INSTRUCTIONS #\n###########################\n\n\n"
       
       puts "In Mastermind, the objective is to guess your opponent's secret color combination. Their secret code will be 4 colors long (order matters!) and may contains the following colors:"
@@ -213,7 +213,7 @@ class Board
       puts "NOTE: The order of the hints does NOT correspond to the order of the colors you guessed. So, a red #{'O'.colorize(:red)} in the third hint spot does NOT mean your third color guessed is correct.\n\n"
       
       puts "You have 12 rounds to guess the secret code. Good luck!\n\n"
-    elsif self.mode == 'P'
+    elsif @mode == 'P'
       puts "###########################\n# MASTERMIND INSTRUCTIONS #\n###########################\n\n\n"
 
       puts "In Mastermind, the objective is to guess your opponent's secret color combination. Their secret code will be 4 colors long (order matters!) and may contains the following colors:"
